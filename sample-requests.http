@@ -1,0 +1,180 @@
+### Library Book Management System - REST API Test Requests
+### Base URL
+@baseUrl = http://localhost:8080/api
+
+### 1. Get Dashboard Statistics (Initial empty or existing state)
+GET {{baseUrl}}/books/stats
+Accept: application/json
+
+###
+
+### 2. Get All Books
+GET {{baseUrl}}/books
+Accept: application/json
+
+###
+
+### 3. Add Sample Book 1 (Wings of Fire - AVAILABLE)
+POST {{baseUrl}}/books
+Content-Type: application/json
+
+{
+  "bookId": "BK101",
+  "title": "Wings of Fire",
+  "author": "A.P.J. Abdul Kalam",
+  "category": "Biography",
+  "status": "AVAILABLE"
+}
+
+###
+
+### 4. Add Sample Book 2 (The Alchemist - ISSUED)
+POST {{baseUrl}}/books
+Content-Type: application/json
+
+{
+  "bookId": "BK102",
+  "title": "The Alchemist",
+  "author": "Paulo Coelho",
+  "category": "Fiction",
+  "status": "ISSUED"
+}
+
+###
+
+### 5. Add Sample Book 3 (Introduction to Algorithms - AVAILABLE)
+POST {{baseUrl}}/books
+Content-Type: application/json
+
+{
+  "bookId": "BK103",
+  "title": "Introduction to Algorithms",
+  "author": "Thomas H. Cormen",
+  "category": "Technology",
+  "status": "AVAILABLE"
+}
+
+###
+
+### 6. Add Sample Book 4 (A Brief History of Time - AVAILABLE)
+POST {{baseUrl}}/books
+Content-Type: application/json
+
+{
+  "bookId": "BK104",
+  "title": "A Brief History of Time",
+  "author": "Stephen Hawking",
+  "category": "Science",
+  "status": "AVAILABLE"
+}
+
+###
+
+### 7. Add Sample Book 5 (The Discovery of India - ISSUED)
+POST {{baseUrl}}/books
+Content-Type: application/json
+
+{
+  "bookId": "BK105",
+  "title": "The Discovery of India",
+  "author": "Jawaharlal Nehru",
+  "category": "History",
+  "status": "ISSUED"
+}
+
+###
+
+### 8. Test Duplicate Book ID (Should return 409 Conflict)
+POST {{baseUrl}}/books
+Content-Type: application/json
+
+{
+  "bookId": "BK101",
+  "title": "Duplicate Book Test",
+  "author": "Someone",
+  "category": "Fiction",
+  "status": "AVAILABLE"
+}
+
+###
+
+### 9. Test Invalid Input / Empty Title (Should return 400 Bad Request)
+POST {{baseUrl}}/books
+Content-Type: application/json
+
+{
+  "bookId": "BK999",
+  "title": "",
+  "author": "Anonymous",
+  "category": "Fiction",
+  "status": "AVAILABLE"
+}
+
+###
+
+### 10. Get Book by ID (Assuming ID 1 exists)
+GET {{baseUrl}}/books/1
+Accept: application/json
+
+###
+
+### 11. Search Books by Title or Author Keyword
+GET {{baseUrl}}/books/search?query=Algorithms
+Accept: application/json
+
+###
+
+### 12. Search Books by Author Keyword (Case-Insensitive)
+GET {{baseUrl}}/books/search?query=kalam
+Accept: application/json
+
+###
+
+### 13. Update Book Details (Keep Book ID fixed)
+PUT {{baseUrl}}/books/1
+Content-Type: application/json
+
+{
+  "title": "Wings of Fire (Special Edition)",
+  "author": "Dr. A.P.J. Abdul Kalam & Arun Tiwari",
+  "category": "Biography",
+  "status": "AVAILABLE"
+}
+
+###
+
+### 14. Change Book Status to ISSUED (PATCH)
+PATCH {{baseUrl}}/books/1/status
+Content-Type: application/json
+
+{
+  "status": "ISSUED"
+}
+
+###
+
+### 15. Change Book Status back to AVAILABLE (PATCH)
+PATCH {{baseUrl}}/books/1/status
+Content-Type: application/json
+
+{
+  "status": "AVAILABLE"
+}
+
+###
+
+### 16. Verify Updated Dashboard Stats
+GET {{baseUrl}}/books/stats
+Accept: application/json
+
+###
+
+### 17. Delete a Book Record (Assuming ID 5 exists)
+DELETE {{baseUrl}}/books/5
+
+###
+
+### 18. Verify 404 on Non-Existent Book
+GET {{baseUrl}}/books/99999
+Accept: application/json
+
